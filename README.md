@@ -98,6 +98,47 @@ The script automatically detects and preserves the NBT format:
 
 Minecraft typically uses uncompressed NBT for servers.dat, but both formats are supported.
 
+## Launcher Integration
+
+### Prism Launcher / MultiMC
+
+To automatically update the server IP before launching Minecraft:
+
+1. Open your instance settings (Edit Instance)
+2. Go to Settings → Custom Commands
+3. Enable "Custom Commands"
+4. In the "Pre-launch command" field, enter:
+```
+/path/to/mc-server-ip/run_update.sh
+```
+Replace `/path/to/mc-server-ip/` with the actual path to this repository.
+
+5. Click OK
+
+Now the server IP will automatically update every time you launch the instance.
+
+**Important:** Use `run_update.sh`, not `update_mc_server_ip.py` directly. The wrapper script ensures the virtual environment is activated.
+
+### Other Launchers
+
+For other launchers, use the wrapper script in any pre-launch hook or custom command field:
+```bash
+/path/to/mc-server-ip/run_update.sh
+```
+
+### Manual Execution
+
+You can also run the wrapper script manually anytime:
+```bash
+./run_update.sh
+```
+
+Or use the Python script directly if your shell has the venv activated:
+```bash
+source venv/bin/activate
+python update_mc_server_ip.py
+```
+
 ## Testing
 
 Run the test suite:

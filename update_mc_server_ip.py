@@ -133,16 +133,18 @@ def upsert_server(nbt: File, name: str, ip: str):
             idx = i
             break
 
-    new_entry = Compound({
-        "name": String(name),
-        "ip": String(ip),
-        # You can add optional fields like "icon" (base64), "acceptTextures" (1b), etc.
-    })
-
     if idx is None:
+        # Create new entry and append
+        new_entry = Compound({
+            "name": String(name),
+            "ip": String(ip),
+            # You can add optional fields like "icon" (base64), "acceptTextures" (1b), etc.
+        })
         servers.append(new_entry)
     else:
-        servers[idx] = new_entry
+        # Update existing entry in-place (preserves NBT structure)
+        servers[idx]["name"] = String(name)
+        servers[idx]["ip"] = String(ip)
 
 def main():
     # Try fast method first (requests.get)
